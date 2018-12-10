@@ -64,6 +64,9 @@ defmodule Postgrex.Utils do
     segments =
       version_string
       |> String.split(".", parts: 3)
+      |> Enum.map(fn s -> String.split(s, ~r{\D}) end)
+      |> List.flatten()
+      |> Enum.filter(fn s -> s != "" end)
       |> Enum.map(&String.to_integer/1)
 
     case segments do
